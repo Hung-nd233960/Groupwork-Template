@@ -1,0 +1,54 @@
+name: "Auto Label Issues"
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  label_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check Issue for Severity & Urgency"
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.payload.issue;
+            const body = issue.body;
+            
+            // Define label mappings
+            const severityLabels = {
+              "Critical (System-breaking)": "severity: critical",
+              "High (Major issue, needs fixing ASAP)": "severity: high",
+              "Medium (Affects usability but has workarounds)": "severity: medium",
+              "Low (Minor inconvenience, not urgent)": "severity: low"
+            };
+
+            const urgencyLabels = {
+              "Immediate (ASAP)": "urgency: immediate",
+              "High (Within a few days)": "urgency: high",
+              "Medium (Within a week)": "urgency: medium",
+              "Low (Can wait)": "urgency: low"
+            };
+
+            // Extract selected values from issue body
+            const severityMatch = body.match(/🛑 Severity.*?\*\*(.*?)\*\*/);
+            const urgencyMatch = body.match(/⏳ Urgency.*?\*\*(.*?)\*\*/);
+
+            const labelsToAdd = [];
+
+            if (severityMatch && severityLabels[severityMatch[1]]) {
+              labelsToAdd.push(severityLabels[severityMatch[1]]);
+            }
+
+            if (urgencyMatch && urgencyLabels[urgencyMatch[1]]) {
+              labelsToAdd.push(urgencyLabels[urgencyMatch[1]]);
+            }
+
+            if (labelsToAdd.length > 0) {
+              github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: labelsToAdd
+              });
+            }
