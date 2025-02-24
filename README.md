@@ -52,6 +52,12 @@ This project is licensed under [LICENSE_NAME]. See [LICENSE](LICENSE) for detail
 ## 🙌 Acknowledgments
 - Contributors
 - Third-party tools and libraries
+- 
+## 📜 Documentation
+- [Contribution Guidelines](CONTRIBUTING.md)
+- [Project Rules](RULES.md)
+- [Changelog](CHANGELOG.md)
+- [Workflow](WORKFLOW.md)
 
 ---
 ### 🛠 Maintainers
