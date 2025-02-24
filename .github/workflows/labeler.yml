@@ -17,21 +17,21 @@ jobs:
             
             // Define label mappings
             const severityLabels = {
-              "Critical (System-breaking)": "severity: critical",
-              "High (Major issue, needs fixing ASAP)": "severity: high",
-              "Medium (Affects usability but has workarounds)": "severity: medium",
-              "Low (Minor inconvenience, not urgent)": "severity: low"
+              "🟥 Critical – Breaks core functionality": "severity: critical",
+              "🟧 High – Major issue, but workaround exists": "severity: high",
+              "🟨 Medium – Affects usability": "severity: medium",
+              "🟩 Low – Cosmetic, minor issue": "severity: low"
             };
 
             const urgencyLabels = {
-              "Immediate (ASAP)": "urgency: immediate",
-              "High (Within a few days)": "urgency: high",
-              "Medium (Within a week)": "urgency: medium",
-              "Low (Can wait)": "urgency: low"
+              "🔥 Immediate – Blocks critical work": "urgency: immediate",
+              "⚡ High – Should be fixed soon": "urgency: high",
+              "⏳ Medium – Fix when possible": "urgency: medium",
+              "🕰️ Low – Can be fixed later": "urgency: low"
             };
 
             // Extract selected values from issue body
-            const severityMatch = body.match(/🛑 Severity.*?\*\*(.*?)\*\*/);
+            const severityMatch = body.match(/🚨 Severity.*?\*\*(.*?)\*\*/);
             const urgencyMatch = body.match(/⏳ Urgency.*?\*\*(.*?)\*\*/);
 
             const labelsToAdd = [];
